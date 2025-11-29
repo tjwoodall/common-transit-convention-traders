@@ -64,9 +64,6 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/BadRequest'
-                  - example:
-                      code: SCHEMA_VALIDATION
-                      message: Request failed schema validation
               example:
                 code: SCHEMA_VALIDATION
                 message: Request failed schema validation
@@ -77,10 +74,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/AcceptHeaderInvalid'
-                  - description: The Accept header is missing or invalid.
-                    example:
-                      code: NOT_ACCEPTABLE
-                      message: The Accept header is missing or invalid.
+                description: The Accept header is missing or invalid.
               example:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
@@ -91,9 +85,6 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/RequestEntityTooLarge'
-                  - example:
-                      code: REQUEST_ENTITY_TOO_LARGE
-                      message: Request Entity Too Large
               example:
                 code: REQUEST_ENTITY_TOO_LARGE
                 message: Request Entity Too Large
@@ -216,10 +207,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/AcceptHeaderInvalid'
-                  - description: The Accept header is missing or invalid.
-                    example:
-                      code: NOT_ACCEPTABLE
-                      message: The Accept header is missing or invalid.
+                description: The Accept header is missing or invalid.
               example:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
@@ -407,10 +395,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/AcceptHeaderInvalid'
-                  - description: The Accept header is missing or invalid.
-                    example:
-                      code: NOT_ACCEPTABLE
-                      message: The Accept header is missing or invalid.
+                description: The Accept header is missing or invalid.
               example:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
@@ -462,9 +447,6 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/BadRequest'
-                  - example:
-                      code: BAD_REQUEST
-                      message: The departure message type is not available within XML or the message failed schema validation.
               example:
                 code: BAD_REQUEST
                 message: The departure message type is not available within XML or the message failed schema validation.
@@ -475,9 +457,6 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/NotFound'
-                  - example:
-                      code: NOT_FOUND
-                      message: Supplied departure not found or does not exist or has been archived or is not available to the EORI number.
               example:
                 code: NOT_FOUND
                 message: Supplied departure not found or does not exist or has been archived or is not available to the EORI number.
@@ -488,10 +467,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/AcceptHeaderInvalid'
-                  - description: The Accept header is missing or invalid.
-                    example:
-                      code: NOT_ACCEPTABLE
-                      message: The Accept header is missing or invalid.
+                description: The Accept header is missing or invalid.
               example:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
@@ -502,9 +478,6 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/RequestEntityTooLarge'
-                  - example:
-                      code: REQUEST_ENTITY_TOO_LARGE
-                      message: Request Entity Too Large
               example:
                 code: REQUEST_ENTITY_TOO_LARGE
                 message: Request Entity Too Large
@@ -560,9 +533,9 @@ paths:
           content:
             application/json+xml:
               schema:
+                description: JSON+XML payload
                 allOf:
                   - $ref: '#/components/schemas/CustomsTransitsMovementsDeparturesMessagesResponse2'
-                  - description: JSON+XML payload
                     xml:
                       name: CustomsTransitsMovementsDeparturesMessagesResponse2
                       attribute: false
@@ -607,10 +580,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/AcceptHeaderInvalid'
-                  - description: The Accept header is missing or invalid.
-                    example:
-                      code: NOT_ACCEPTABLE
-                      message: The Accept header is missing or invalid.
+                description: The Accept header is missing or invalid.
               example:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
@@ -686,10 +656,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/AcceptHeaderInvalid'
-                  - description: The Accept header is missing or invalid.
-                    example:
-                      code: NOT_ACCEPTABLE
-                      message: The Accept header is missing or invalid.
+                description: The Accept header is missing or invalid.
               example:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
@@ -737,9 +704,6 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/BadRequest'
-                  - example:
-                      code: SCHEMA_VALIDATION
-                      message: Request failed schema validation
               example:
                 code: SCHEMA_VALIDATION
                 message: Request failed schema validation
@@ -750,10 +714,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/AcceptHeaderInvalid'
-                  - description: The Accept header is missing or invalid.
-                    example:
-                      code: NOT_ACCEPTABLE
-                      message: The Accept header is missing or invalid.
+                description: The Accept header is missing or invalid.
               example:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
@@ -764,9 +725,6 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/RequestEntityTooLarge'
-                  - example:
-                      code: REQUEST_ENTITY_TOO_LARGE
-                      message: Request Entity Too Large
               example:
                 code: REQUEST_ENTITY_TOO_LARGE
                 message: Request Entity Too Large
@@ -959,10 +917,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/AcceptHeaderInvalid'
-                  - description: The Accept header is missing or invalid.
-                    example:
-                      code: NOT_ACCEPTABLE
-                      message: The Accept header is missing or invalid.
+                description: The Accept header is missing or invalid.
               example:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
@@ -1315,10 +1270,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/AcceptHeaderInvalid'
-                  - description: The Accept header is missing or invalid.
-                    example:
-                      code: NOT_ACCEPTABLE
-                      message: The Accept header is missing or invalid.
+                description: The Accept header is missing or invalid.
               example:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
