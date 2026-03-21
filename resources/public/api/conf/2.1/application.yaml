@@ -89,7 +89,7 @@ paths:
                 code: REQUEST_ENTITY_TOO_LARGE
                 message: Request Entity Too Large
       security:
-        - userRestricted:
+        - User-Restricted:
             - common-transit-convention-traders
     get:
       tags:
@@ -212,7 +212,7 @@ paths:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
       security:
-        - userRestricted:
+        - User-Restricted:
             - common-transit-convention-traders
   /customs/transits/movements/departures/{departureId}:
     get:
@@ -277,7 +277,7 @@ paths:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
       security:
-        - userRestricted:
+        - User-Restricted:
             - common-transit-convention-traders
   /customs/transits/movements/departures/{departureId}/messages:
     get:
@@ -400,7 +400,7 @@ paths:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
       security:
-        - userRestricted:
+        - User-Restricted:
             - common-transit-convention-traders
     post:
       tags:
@@ -482,7 +482,7 @@ paths:
                 code: REQUEST_ENTITY_TOO_LARGE
                 message: Request Entity Too Large
       security:
-        - userRestricted:
+        - User-Restricted:
             - common-transit-convention-traders
   /customs/transits/movements/departures/{departureId}/messages/{messageId}:
     get:
@@ -585,7 +585,7 @@ paths:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
       security:
-        - userRestricted:
+        - User-Restricted:
             - common-transit-convention-traders
   /customs/transits/movements/departures/{departureId}/messages/{messageId}/body:
     get:
@@ -661,7 +661,7 @@ paths:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
       security:
-        - userRestricted:
+        - User-Restricted:
             - common-transit-convention-traders
   /customs/transits/movements/arrivals:
     post:
@@ -729,7 +729,7 @@ paths:
                 code: REQUEST_ENTITY_TOO_LARGE
                 message: Request Entity Too Large
       security:
-        - userRestricted:
+        - User-Restricted:
             - common-transit-convention-traders
     get:
       tags:
@@ -858,7 +858,7 @@ paths:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
       security:
-        - userRestricted:
+        - User-Restricted:
             - common-transit-convention-traders
   /customs/transits/movements/arrivals/{arrivalId}:
     get:
@@ -922,7 +922,7 @@ paths:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
       security:
-        - userRestricted:
+        - User-Restricted:
             - common-transit-convention-traders
   /customs/transits/movements/arrivals/{arrivalId}/messages:
     get:
@@ -1034,7 +1034,7 @@ paths:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
       security:
-        - userRestricted:
+        - User-Restricted:
             - common-transit-convention-traders
     post:
       tags:
@@ -1111,7 +1111,7 @@ paths:
                 code: REQUEST_ENTITY_TOO_LARGE
                 message: Request Entity Too Large
       security:
-        - userRestricted:
+        - User-Restricted:
             - common-transit-convention-traders
   /customs/transits/movements/arrivals/{arrivalId}/messages/{messageId}:
     get:
@@ -1199,7 +1199,7 @@ paths:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
       security:
-        - userRestricted:
+        - User-Restricted:
             - common-transit-convention-traders
   /customs/transits/movements/arrivals/{arrivalId}/messages/{messageId}/body:
     get:
@@ -1275,7 +1275,7 @@ paths:
                 code: NOT_ACCEPTABLE
                 message: The Accept header is missing or invalid.
       security:
-        - userRestricted:
+        - User-Restricted:
             - common-transit-convention-traders
 components:
   schemas:
@@ -2186,7 +2186,7 @@ components:
           - application/xml
       required: true
   securitySchemes:
-    userRestricted:
+    User-Restricted:
       type: oauth2
       description: >-
         HMRC supports OAuth 2.0 for authenticating user restricted API requests
