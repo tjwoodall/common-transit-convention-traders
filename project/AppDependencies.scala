@@ -3,12 +3,12 @@ import sbt.*
 object AppDependencies {
 
   private val catsVersion          = "2.13.0"
-  private val bootstrapPlayVersion = "9.19.0"
+  private val bootstrapPlayVersion = "10.7.0"
 
   val compile: Seq[ModuleID] = Seq(
     "uk.gov.hmrc"      %% "bootstrap-backend-play-30"       % bootstrapPlayVersion,
     "org.typelevel"    %% "cats-core"                       % catsVersion,
-    "org.json"          % "json"                            % "20250107",
+    "org.json"          % "json"                            % "20251224",
     "io.lemonlabs"     %% "scala-uri"                       % "4.0.3",
     "org.apache.pekko" %% "pekko-connectors-xml"            % "1.1.0",
     "org.apache.pekko" %% "pekko-connectors-json-streaming" % "1.1.0",
