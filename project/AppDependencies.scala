@@ -10,12 +10,12 @@ object AppDependencies {
     "org.typelevel"    %% "cats-core"                       % catsVersion,
     "org.json"          % "json"                            % "20251224",
     "io.lemonlabs"     %% "scala-uri"                       % "4.0.3",
-    "org.apache.pekko" %% "pekko-connectors-xml"            % "1.1.0",
-    "org.apache.pekko" %% "pekko-connectors-json-streaming" % "1.1.0",
-    "org.apache.pekko" %% "pekko-protobuf-v3" % "1.1.3",
-    "org.apache.pekko" %% "pekko-serialization-jackson" % "1.1.3",
-    "org.apache.pekko" %% "pekko-stream" % "1.1.3",
-    "org.apache.pekko" %% "pekko-actor-typed" % "1.1.3"
+    "org.apache.pekko" %% "pekko-connectors-xml"            % "1.3.0",
+    "org.apache.pekko" %% "pekko-connectors-json-streaming" % "1.3.0",
+    "org.apache.pekko" %% "pekko-protobuf-v3" % "1.5.0",
+    "org.apache.pekko" %% "pekko-serialization-jackson" % "1.5.0",
+    "org.apache.pekko" %% "pekko-stream" % "1.5.0",
+    "org.apache.pekko" %% "pekko-actor-typed" % "1.5.0"
   )
 
   val test: Seq[ModuleID] = Seq(

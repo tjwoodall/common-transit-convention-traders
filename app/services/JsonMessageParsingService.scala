@@ -49,7 +49,7 @@ class JsonMessageParsingService @Inject() (implicit materializer: Materializer) 
       Future.fromTry(Using(source.runWith(StreamConverters.asInputStream(20.seconds))) {
         jsonInput =>
           val jsonNode: JsonNode      = mapper.readTree(jsonInput)
-          val rootNode                = jsonNode.fields().next().getKey
+          val rootNode                = jsonNode.fieldNames().next()
           val messageTypeFromRootNode = rootNode.split(":")(1)
           messageTypeList.find(_.rootNode == messageTypeFromRootNode) match {
             case Some(messageType) => Right(messageType)
