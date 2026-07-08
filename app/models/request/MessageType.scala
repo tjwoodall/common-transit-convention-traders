@@ -36,6 +36,7 @@ enum MessageType(val code: String, val movementType: MovementType, val rootNode:
   case DeclarationInvalidationRequest    extends MessageType("IE014", MovementType.Departure, "CC014C", AuditType.DeclarationInvalidationRequest)
   case DeclarationData                   extends MessageType("IE015", MovementType.Departure, "CC015C", AuditType.DeclarationData)
   case Discrepancies                     extends MessageType("IE019", MovementType.Departure, "CC019C", AuditType.Discrepancies)
+  case NotificationToAmendDeclaration    extends MessageType("IE022", MovementType.Departure, "CC022C", AuditType.NotificationToAmendDeclaration)
   case MRNAllocated                      extends MessageType("IE028", MovementType.Departure, "CC028C", AuditType.MRNAllocated)
   case ReleaseForTransit                 extends MessageType("IE029", MovementType.Departure, "CC029C", AuditType.ReleaseForTransit)
   case RecoveryNotification              extends MessageType("IE035", MovementType.Departure, "CC035C", AuditType.RecoveryNotification)
