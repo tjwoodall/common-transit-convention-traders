@@ -20,6 +20,7 @@ import models.request.MessageType.ArrivalNotification
 import models.request.MessageType.DeclarationAmendment
 import models.request.MessageType.DeclarationData
 import models.request.MessageType.DeclarationInvalidationRequest
+import models.request.MessageType.NotificationToAmendDeclaration
 import models.request.MessageType.PresentationNotificationForThePreLodgedDeclaration
 import models.request.MessageType.UnloadingRemarks
 import org.scalacheck.Gen
@@ -71,6 +72,12 @@ class MessageTypeSpec extends AnyFreeSpec with Matchers with MockitoSugar with O
       PresentationNotificationForThePreLodgedDeclaration.code mustEqual "IE170"
       PresentationNotificationForThePreLodgedDeclaration.rootNode mustEqual "CC170C"
       MessageType.updateMessageTypesSentByDepartureTrader must contain(PresentationNotificationForThePreLodgedDeclaration)
+    }
+
+    "NotificationToAmendDeclaration" in {
+      MessageType.values must contain(NotificationToAmendDeclaration)
+      NotificationToAmendDeclaration.code mustEqual "IE022"
+      NotificationToAmendDeclaration.rootNode mustEqual "CC022C"
     }
   }
 
