@@ -5656,6 +5656,101 @@ class MovementsControllerSpec
 
             }
 
+            "when the message IE022 is stored in mongo and is found and enableMessageType022 set to true" in {
+              val ControllerAndMocks(
+                sut,
+                _,
+                mockPersistenceService,
+                _,
+                _,
+                mockConversionService,
+                _,
+                _,
+                _,
+                _,
+                mockAppConfig
+              ) = createControllerAndMocks()
+              when(mockAppConfig.enableMessageType022).thenReturn(true)
+              when(
+                mockPersistenceService.getMessage(EORINumber(any()), any[MovementType], MovementId(any()), MessageId(any()), any[Version])(
+                  any[HeaderCarrier],
+                  any[ExecutionContext]
+                )
+              )
+                .thenAnswer(
+                  _ => EitherT.rightT(smallMessageSummaryXml.copy(messageType = Some(MessageType.NotificationToAmendDeclaration)))
+                )
+
+              if (acceptHeaderValue == VersionedHeader(JsonHeader, versionHeader)) {
+                when(
+                  mockConversionService.convert(eqTo(MessageType.NotificationToAmendDeclaration), any(), eqTo(xmlToJson), eqTo(versionHeader))(
+                    any(),
+                    any(),
+                    any()
+                  )
+                ).thenReturn(EitherT.rightT(Source.single(ByteString(smallMessageSummaryJson.body.get.value))))
+              }
+
+              val result = sut.getMessage(MovementType.Departure, movementId, messageId)(request)
+
+              status(result) mustBe OK
+              acceptHeaderValue match {
+                case VersionedHeader(JsonHeader, versionHeader) =>
+                  contentAsJson(result) mustBe Json.toJson(
+                    HateoasMovementMessageResponse(
+                      movementId,
+                      messageId,
+                      smallMessageSummaryJson.copy(messageType = Some(MessageType.NotificationToAmendDeclaration)),
+                      MovementType.Departure
+                    )
+                  )
+                case VersionedHeader(mt, v) if (mt == JsonPlusXmlHeader || mt == JsonHyphenXmlHeader) && v == versionHeader =>
+                  contentAsJson(result) mustBe Json.toJson(
+                    HateoasMovementMessageResponse(
+                      movementId,
+                      messageId,
+                      smallMessageSummaryXml.copy(messageType = Some(MessageType.NotificationToAmendDeclaration)),
+                      MovementType.Departure
+                    )
+                  )
+                case invalid => fail(s"Invalid accept header: $invalid")
+              }
+            }
+
+            "when the message IE022 is stored in mongo and is found and enableMessageType022 flag set to false" in {
+              val ControllerAndMocks(
+                sut,
+                _,
+                mockPersistenceService,
+                _,
+                _,
+                mockConversionService,
+                _,
+                _,
+                _,
+                _,
+                mockAppConfig
+              ) = createControllerAndMocks()
+              when(mockAppConfig.enableMessageType022).thenReturn(false)
+              when(
+                mockPersistenceService.getMessage(EORINumber(any()), any[MovementType], MovementId(any()), MessageId(any()), any[Version])(
+                  any[HeaderCarrier],
+                  any[ExecutionContext]
+                )
+              )
+                .thenAnswer(
+                  _ => EitherT.rightT(smallMessageSummaryXml.copy(messageType = Some(MessageType.NotificationToAmendDeclaration)))
+                )
+
+              val result = sut.getMessage(MovementType.Departure, movementId, messageId)(request)
+              status(result) mustBe INTERNAL_SERVER_ERROR
+              contentType(result).get mustBe MimeTypes.JSON
+              contentAsJson(result) mustBe Json.obj(
+                "code"    -> "INTERNAL_SERVER_ERROR",
+                "message" -> "IE022 MessageType not supported"
+              )
+            }
+
             "when the message is stored in object store and is found" in {
               val ControllerAndMocks(
                 sut,
@@ -6208,6 +6303,90 @@ class MovementsControllerSpec
                   contentType(result).get mustBe MimeTypes.JSON
                 case _ => fail(s"Invalid accept header: ${acceptHeader.value}")
               }
+            }
+
+            "when the message IE022 is stored in mongo and is found and enableMessageType022 flag set to true" in {
+              val ControllerAndMocks(
+                sut,
+                _,
+                mockPersistenceService,
+                _,
+                _,
+                mockConversionService,
+                _,
+                _,
+                _,
+                _,
+                mockAppConfig
+              ) = createControllerAndMocks()
+              when(mockAppConfig.enableMessageType022).thenReturn(true)
+              when(
+                mockPersistenceService.getMessage(EORINumber(any()), any[MovementType], MovementId(any()), MessageId(any()), any[Version])(
+                  any[HeaderCarrier],
+                  any[ExecutionContext]
+                )
+              )
+                .thenAnswer(
+                  _ => EitherT.rightT(smallMessageSummaryXml.copy(messageType = Some(MessageType.NotificationToAmendDeclaration)))
+                )
+              if (acceptHeader == VersionedHeader(JsonHeader, versionHeader)) {
+                when(
+                  mockConversionService.convert(eqTo(MessageType.NotificationToAmendDeclaration), any(), eqTo(xmlToJson), eqTo(versionHeader))(
+                    any(),
+                    any(),
+                    any()
+                  )
+                ).thenReturn(EitherT.rightT(Source.single(ByteString(smallMessageSummaryJson.body.get.value))))
+              }
+
+              val result = sut.getMessageBody(MovementType.Departure, movementId, messageId)(request)
+
+              status(result) mustBe OK
+
+              acceptHeader match {
+                case VersionedHeader(XMLHeader, version) =>
+                  contentAsString(result) mustBe xml
+                  contentType(result).get mustBe MimeTypes.XML
+                case VersionedHeader(JsonHeader, versionHeader) =>
+                  contentAsJson(result) mustBe Json.toJson(json)
+                  contentType(result).get mustBe MimeTypes.JSON
+                case _ => fail(s"Invalid accept header: ${acceptHeader.value}")
+              }
+            }
+
+            "when the message IE022 is stored in mongo and is found and and enableMessageType022 flag set to false" in {
+              val ControllerAndMocks(
+                sut,
+                _,
+                mockPersistenceService,
+                _,
+                _,
+                mockConversionService,
+                _,
+                _,
+                _,
+                _,
+                mockAppConfig
+              ) = createControllerAndMocks()
+              when(mockAppConfig.enableMessageType022).thenReturn(false)
+              when(
+                mockPersistenceService.getMessage(EORINumber(any()), any[MovementType], MovementId(any()), MessageId(any()), any[Version])(
+                  any[HeaderCarrier],
+                  any[ExecutionContext]
+                )
+              )
+                .thenAnswer(
+                  _ => EitherT.rightT(smallMessageSummaryXml.copy(messageType = Some(MessageType.NotificationToAmendDeclaration)))
+                )
+
+              val result = sut.getMessageBody(MovementType.Departure, movementId, messageId)(request)
+
+              status(result) mustBe INTERNAL_SERVER_ERROR
+              contentType(result).get mustBe MimeTypes.JSON
+              contentAsJson(result) mustBe Json.obj(
+                "code"    -> "INTERNAL_SERVER_ERROR",
+                "message" -> "IE022 MessageType not supported"
+              )
             }
 
             "when the message is stored in object store and is found" in {
@@ -10618,5 +10797,4 @@ class MovementsControllerSpec
       }
     }
   }
-
 }
