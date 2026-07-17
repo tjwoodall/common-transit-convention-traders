@@ -369,7 +369,6 @@ class MovementsControllerImpl @Inject() (
       implicit request =>
         implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequest(request)
         val version                    = request.versionedHeader.version
-
         (for {
           messageSummary <- persistenceService
             .getMessage(request.authenticatedRequest.eoriNumber, movementType, movementId, messageId, version)
@@ -389,8 +388,9 @@ class MovementsControllerImpl @Inject() (
                 err
             }
           acceptHeader = request.headers.get(HeaderNames.ACCEPT).get
-          messageBody <- getBody(request.authenticatedRequest.eoriNumber, movementType, movementId, messageId, messageSummary.body, version)
-          body        <- mergeMessageSummaryAndBody(movementId, messageSummary, movementType, messageBody)
+          messageBody <-
+            checkIE022MessageType(movementType, movementId, messageId, request, version, messageSummary)
+          body <- mergeMessageSummaryAndBody(movementId, messageSummary, movementType, messageBody)
         } yield body).fold(
           presentationError => Status(presentationError.code.statusCode)(Json.toJson(presentationError)),
           response => Ok.chunked(response, Some(MimeTypes.JSON))
@@ -518,13 +518,30 @@ class MovementsControllerImpl @Inject() (
         (for {
           messageSummary <- persistenceService.getMessage(request.authenticatedRequest.eoriNumber, movementType, movementId, messageId, version).asPresentation
           acceptHeader = request.headers.get(HeaderNames.ACCEPT).get
-          messageBody <- getBody(request.authenticatedRequest.eoriNumber, movementType, movementId, messageId, messageSummary.body, version)
-          body        <- formatMessageBody(messageSummary, messageBody)
+          messageBody <-
+            checkIE022MessageType(movementType, movementId, messageId, request, version, messageSummary)
+          body <- formatMessageBody(messageSummary, messageBody)
         } yield body).fold(
           presentationError => Status(presentationError.code.statusCode)(Json.toJson(presentationError)),
           response => Ok.chunked(response.body, Some(response.contentType))
         )
     }
+
+  private def checkIE022MessageType(
+    movementType: MovementType,
+    movementId: MovementId,
+    messageId: MessageId,
+    request: ValidatedVersionedRequest[AnyContent],
+    version: Version,
+    messageSummary: MessageSummary
+  )(implicit
+    hc: HeaderCarrier
+  ) =
+    if (
+      movementType == MovementType.Departure && messageSummary.messageType.isDefined && MessageType.NotificationToAmendDeclaration == messageSummary.messageType.get && !config.enableMessageType022
+    )
+      EitherT.leftT[Future, Option[BodyAndSize]](PresentationError.internalServiceError("IE022 MessageType not supported"))
+    else getBody(request.authenticatedRequest.eoriNumber, movementType, movementId, messageId, messageSummary.body, version)
 
   override def getMessageIds(
     movementType: MovementType,

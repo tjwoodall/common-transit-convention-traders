@@ -59,6 +59,7 @@ enum AuditType(val name: String) {
   case GetMovementDBFailed                                extends AuditType("GetMovementDBFailed")
   case GetMovementMessagesDBFailed                        extends AuditType("GetMovementMessagesDBFailed")
   case GetMovementMessageDBFailed                         extends AuditType("GetMovementMessageDBFailed")
+  case NotificationToAmendDeclaration                     extends AuditType("NotificationToAmendDeclaration")
 }
 
 object AuditType {
